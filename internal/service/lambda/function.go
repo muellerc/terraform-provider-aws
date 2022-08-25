@@ -893,12 +893,12 @@ func resourceFunctionRead(d *schema.ResourceData, meta interface{}) error {
 		return nil
 	}
 
-	// Currently, this functionality is not enabled in ap-northeast-3 (Osaka) and ap-southeast-3 (Jakarta) region
-	// and returns ambiguous error codes (e.g. AccessDeniedException)
+	// Currently, this functionality is not enabled in ap-northeast-3 (Osaka), ap-southeast-3 (Jakarta) and
+	// me-central-1 (UAE) region and returns ambiguous error codes (e.g. AccessDeniedException)
 	// so we cannot just ignore the error as would typically.
 	// We are hardcoding the region here, because go aws sdk endpoints
 	// package does not support Signer service
-	if region := meta.(*conns.AWSClient).Region; region == endpoints.ApNortheast3RegionID || region == endpoints.ApSoutheast3RegionID {
+	if region := meta.(*conns.AWSClient).Region; region == endpoints.ApNortheast3RegionID || region == endpoints.ApSoutheast3RegionID || region == endpoints.MeCentral1RegionID {
 		return nil
 	}
 
